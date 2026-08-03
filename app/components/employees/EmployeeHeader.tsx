@@ -4,25 +4,33 @@ import { Box, Button, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useAppDispatch } from "../../redux/hooks";
 import { addEmployee } from "../../redux/slices/employeeSlice";
+import { createEmployee } from "../../redux/thunks/employeeThunk";
+import { useState } from "react";
+import AddEmployeeDialog from "./AddEmployeeDialog";
 
 export default function EmployeeHeader() {
-  const dispatch = useAppDispatch();
+  const [open, setOpen] = useState(false);
 
-const handleAddEmployee = () => {
-  dispatch(
-    addEmployee({
-      id: Date.now(),
-      employeeId: "EMP999",
-      firstName: "Siri",
-      lastName: "Bobbili",
-      email: "siri@example.com",
-      phone: "9999999999",
-      department: "Engineering",
-      designation: "React Developer",
-      status: "Active",
-    })
-  );
-};
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleAddEmployee = () => {
+    // dispatch(
+    //   addEmployee({
+    //     id: Date.now(),
+    //     employeeId: "EMP999",
+    //     firstName: "Siri",
+    //     lastName: "Bobbili",
+    //     email: "siri@example.com",
+    //     phone: "9999999999",
+    //     department: "Engineering",
+    //     designation: "React Developer",
+    //     status: "Active",
+    //   })
+    // );
+    setOpen(true);
+  };
   return (
     <Box
       sx={{
@@ -49,6 +57,7 @@ const handleAddEmployee = () => {
       >
         Add Employee
       </Button>
+      <AddEmployeeDialog open={open} onClose={handleClose} />
     </Box>
   );
 }
