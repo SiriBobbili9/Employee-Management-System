@@ -17,8 +17,7 @@ import {
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-
-import { recentEmployees } from "../../constants/recentEmployees";
+import { useAppSelector } from "../../redux/hooks";
 
 const getStatusColor = (
   status: string
@@ -34,6 +33,9 @@ const getStatusColor = (
 };
 
 export default function EmployeeTable() {
+  const recentEmployees = useAppSelector(
+  (state) => state.employee.employees
+);
   return (
     <TableContainer
       component={Paper}
@@ -55,11 +57,11 @@ export default function EmployeeTable() {
               <TableCell>
                 <Box display="flex" alignItems="center" gap={2}>
                   <Avatar>
-                    {employee.name.charAt(0)}
+                    {employee.firstName?.charAt(0)}
                   </Avatar>
 
                   <Typography>
-                    {employee.name}
+                    {employee.firstName} {employee.lastName}
                   </Typography>
                 </Box>
               </TableCell>
