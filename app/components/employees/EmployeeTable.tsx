@@ -23,6 +23,7 @@ import { useAppSelector } from "../../redux/hooks";
 import { Employee } from "../../redux/slices/employeeSlice";
 import { useState } from "react";
 import EditEmployeeDialog from "./EditEmployeeDialog";
+import DeleteEmployeeDialog from "./DeleteEmployeeDialog";
 
 const getStatusColor = (status: string): "success" | "warning" | "error" => {
   switch (status) {
@@ -41,11 +42,16 @@ export default function EmployeeTable() {
 
     setOpenEdit(true);
   };
+  const handleDelete = (employee: Employee) => {
+    setSelectedEmployee(employee);
+    setOpenDelete(true);
+  };
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(
     null,
   );
 
   const [openEdit, setOpenEdit] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
   const { employees, loading, error } = useAppSelector(
     (state) => state.employee,
   );
@@ -98,7 +104,10 @@ export default function EmployeeTable() {
                     <EditIcon />
                   </IconButton>
 
-                  <IconButton color="error">
+                  <IconButton
+                    color="error"
+                    onClick={() => handleDelete(employee)}
+                  >
                     <DeleteIcon />
                   </IconButton>
                 </TableCell>
@@ -111,6 +120,11 @@ export default function EmployeeTable() {
         open={openEdit}
         employee={selectedEmployee}
         onClose={() => setOpenEdit(false)}
+      />
+      <DeleteEmployeeDialog
+        open={openDelete}
+        employee={selectedEmployee}
+        onClose={() => setOpenDelete(false)}
       />
     </div>
   );

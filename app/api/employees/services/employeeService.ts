@@ -56,14 +56,14 @@ export const employeeService = {
   },
 
   async deleteEmployee(id: number) {
-    const response = await fetch(`${BASE_URL}/${id}`, {
-      method: "DELETE",
-    });
+  const response = await fetch(`/api/employees/${id}`, {
+    method: "DELETE",
+  });
 
-    if (!response.ok) {
-      throw new Error("Failed to delete employee");
-    }
+  if (!response.ok) {
+    throw new Error("Failed to delete employee");
+  }
 
-    return response.json();
-  },
+  return response.json();
+}
 };

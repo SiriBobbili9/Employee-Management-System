@@ -20,3 +20,9 @@ export const updateEmployee = createAsyncThunk(
     return await employeeService.updateEmployee(employee.id, employee);
   },
 );
+export const deleteEmployee = createAsyncThunk(
+  "employee/deleteEmployee",
+  async (id: number) => {
+    return await employeeService.deleteEmployee(id);
+  }
+);

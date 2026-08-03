@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { createEmployee, fetchEmployees, updateEmployee } from "../thunks/employeeThunk";
+import { createEmployee, deleteEmployee, fetchEmployees, updateEmployee } from "../thunks/employeeThunk";
 export interface Employee {
   id: number;
   employeeId: string;
@@ -65,11 +65,11 @@ const employeeSlice = createSlice({
       state.employees.push(action.payload);
     },
 
-    deleteEmployee(state, action: PayloadAction<number>) {
-      state.employees = state.employees.filter(
-        employee => employee.id !== action.payload
-      );
-    },
+    // deleteEmployee(state, action: PayloadAction<number>) {
+    //   state.employees = state.employees.filter(
+    //     employee => employee.id !== action.payload
+    //   );
+    // },
 
     // updateEmployee(state, action: PayloadAction<Employee>) {
     //   const index = state.employees.findIndex(
@@ -127,6 +127,21 @@ const employeeSlice = createSlice({
         state.loading = false;
         state.error = "Failed to update employee";
       });
+      builder.
+      addCase(deleteEmployee.pending, (state) => {
+  state.loading = true;
+  state.error = null;
+    })
+    .addCase(deleteEmployee.fulfilled, (state, action) => {
+      state.loading = false;
+
+      state.employees = state.employees.filter(
+        (employee) => employee.id !== action.payload.id
+      );
+    }).addCase(deleteEmployee.rejected, (state) => {
+      state.loading = false;
+      state.error = "Failed to delete employee";
+    });
     
 }
 });
@@ -134,7 +149,7 @@ const employeeSlice = createSlice({
 export const {
   setEmployees,
   addEmployee,
-  deleteEmployee,
+  // deleteEmployee,
 } = employeeSlice.actions;
 
 export default employeeSlice.reducer;
