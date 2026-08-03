@@ -36,7 +36,17 @@ const getStatusColor = (status: string): "success" | "warning" | "error" => {
   }
 };
 
-export default function EmployeeTable() {
+interface EmployeeTableProps {
+  employees: Employee[];
+  loading: boolean;
+  error: string | null;
+}
+
+export default function EmployeeTable({
+  employees,
+  loading,
+  error,
+}: EmployeeTableProps) {
   const handleEdit = (employee: Employee) => {
     setSelectedEmployee(employee);
 
@@ -52,9 +62,7 @@ export default function EmployeeTable() {
 
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-  const { employees, loading, error } = useAppSelector(
-    (state) => state.employee,
-  );
+
   if (loading) {
     return <CircularProgress />;
   }

@@ -9,7 +9,9 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { Employee } from "@/types/employee";
+import { Employee } from "../../redux/slices/employeeSlice";
+import { departments } from "../../constants/departmentsValues";
+import { employeeStatus } from "../../constants/employeeStatus";
 import SimpleReactValidator from "simple-react-validator";
 
 interface EmployeeFormProps {
@@ -144,12 +146,17 @@ export default function EmployeeForm({
             value={formData.department}
             onChange={(e) => onChange("department", e.target.value)}
           >
-            <MenuItem value="Engineering">Engineering</MenuItem>
+            {/* <MenuItem value="Engineering">Engineering</MenuItem>
             <MenuItem value="Human Resources">Human Resources</MenuItem>
             <MenuItem value="Finance">Finance</MenuItem>
             <MenuItem value="Sales">Sales</MenuItem>
             <MenuItem value="Marketing">Marketing</MenuItem>
-            <MenuItem value="IT Support">IT Support</MenuItem>
+            <MenuItem value="IT Support">IT Support</MenuItem> */}
+            {departments.map((dept) => (
+              <MenuItem key={dept} value={dept}>
+                {dept}
+              </MenuItem>
+            ))}
           </Select>
 
           <FormHelperText>
@@ -201,9 +208,14 @@ export default function EmployeeForm({
               onChange("status", e.target.value as Employee["status"])
             }
           >
-            <MenuItem value="Active">Active</MenuItem>
-            <MenuItem value="Inactive">Inactive</MenuItem>
-            <MenuItem value="On Leave">On Leave</MenuItem>
+                {/* <MenuItem value="Active">Active</MenuItem>
+                <MenuItem value="Inactive">Inactive</MenuItem>
+                <MenuItem value="On Leave">On Leave</MenuItem> */}
+                {employeeStatus.map((status) => (
+                  <MenuItem key={status} value={status}>
+                    {status}
+                  </MenuItem>
+                ))}
           </Select>
 
           <FormHelperText>
