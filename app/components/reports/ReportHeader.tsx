@@ -3,7 +3,13 @@
 import { Box, Button, Typography } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 
-export default function ReportHeader() {
+interface ReportHeaderProps {
+  onAdd?: () => void;
+}
+
+export default function ReportHeader({
+  onAdd,
+}: ReportHeaderProps) {
   return (
     <Box
       sx={{
@@ -26,8 +32,9 @@ export default function ReportHeader() {
       <Button
         variant="contained"
         startIcon={<DownloadIcon />}
+        onClick={onAdd}
       >
-        Export Reports
+        Create Report
       </Button>
     </Box>
   );

@@ -19,6 +19,7 @@ import { payrollSortOptions } from "../constants/payroll/payrollSortOptions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { fetchPayrolls } from "../redux/thunks/payrollThunk";
 import { PayrollRecord } from "../redux/slices/payrollSlice";
+import EmployeeGrowthChart from "../components/payroll/EmployeeGrowthChart";
 
 export default function PayrollPage() {
   const dispatch = useAppDispatch();
@@ -136,6 +137,7 @@ export default function PayrollPage() {
         paidCount={summary.paidCount}
         pendingCount={summary.pendingCount}
       />
+<EmployeeGrowthChart />
 
       <FilterBar
         filters={filters}
@@ -145,7 +147,7 @@ export default function PayrollPage() {
         onChange={handleFilterChange}
         onSortChange={setSortBy}
       />
-
+      
       <DataTable
         rows={sortedPayrolls}
         columns={payrollColumns(handleEdit, handleDelete)}

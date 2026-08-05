@@ -3,17 +3,29 @@
 import Grid from "@mui/material/Grid";
 import DashboardCard from "../../components/dashboard/DashboardCard";
 import AssessmentIcon from "@mui/icons-material/Assessment";
-import GroupsIcon from "@mui/icons-material/Groups";
-import EventAvailableIcon from "@mui/icons-material/EventAvailable";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import PaymentsIcon from "@mui/icons-material/Payments";
 
-export default function ReportSummary() {
+interface ReportSummaryProps {
+  totalReports: number;
+  completedReports: number;
+  processingReports: number;
+  payrollReports: number;
+}
+
+export default function ReportSummary({
+  totalReports,
+  completedReports,
+  processingReports,
+  payrollReports,
+}: ReportSummaryProps) {
   return (
     <Grid container spacing={3} sx={{ mb: 3 }}>
       <Grid size={{ xs: 12, md: 3 }}>
         <DashboardCard
           title="Total Reports"
-          value="156"
+          value={String(totalReports)}
           subtitle="Generated"
           icon={<AssessmentIcon />}
         />
@@ -21,27 +33,27 @@ export default function ReportSummary() {
 
       <Grid size={{ xs: 12, md: 3 }}>
         <DashboardCard
-          title="Employees"
-          value="125"
-          subtitle="Active Employees"
-          icon={<GroupsIcon />}
+          title="Completed"
+          value={String(completedReports)}
+          subtitle="Ready reports"
+          icon={<CheckCircleIcon />}
         />
       </Grid>
 
       <Grid size={{ xs: 12, md: 3 }}>
         <DashboardCard
-          title="Attendance"
-          value="96%"
-          subtitle="Average"
-          icon={<EventAvailableIcon />}
+          title="Processing"
+          value={String(processingReports)}
+          subtitle="In progress"
+          icon={<PendingActionsIcon />}
         />
       </Grid>
 
       <Grid size={{ xs: 12, md: 3 }}>
         <DashboardCard
-          title="Payroll"
-          value="₹2.35 Cr"
-          subtitle="Monthly"
+          title="Payroll Reports"
+          value={String(payrollReports)}
+          subtitle="By type"
           icon={<PaymentsIcon />}
         />
       </Grid>

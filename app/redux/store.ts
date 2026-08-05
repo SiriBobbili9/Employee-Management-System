@@ -5,6 +5,7 @@ import departmentReducer from "./slices/departmentSlice";
 import attendanceReducer from "./slices/attendanceSlice";
 import leaveReducer from "./slices/leaveSlice";
 import payrollReducer from "./slices/payrollSlice";
+import reportReducer from "./slices/reportSlice";
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -13,6 +14,7 @@ export const store = configureStore({
     attendance: attendanceReducer,
     leave: leaveReducer,
     payroll: payrollReducer,
+    report: reportReducer,
   },
 });
 
