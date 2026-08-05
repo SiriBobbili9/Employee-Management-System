@@ -58,6 +58,6 @@ export const menuItems: MenuItem[] = [
   {
     label: "Logout",
     icon: LogoutIcon,
-    path: "/logout",
+    path: "/login",
   },
 ];
