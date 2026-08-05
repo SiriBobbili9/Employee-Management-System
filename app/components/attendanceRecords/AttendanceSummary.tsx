@@ -4,14 +4,42 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
-const summary = [
-  { title: "Total Employees", value: "120", icon: <PeopleIcon /> },
-  { title: "Present", value: "108", icon: <CheckCircleIcon /> },
-  { title: "Absent", value: "8", icon: <CancelIcon /> },
-  { title: "Late", value: "4", icon: <AccessTimeIcon /> },
-];
+interface AttendanceSummaryProps {
+  totalEmployees: number;
+  present: number;
+  absent: number;
+  late: number;
+}
 
-export default function AttendanceSummary() {
+export default function AttendanceSummary({
+  totalEmployees,
+  present,
+  absent,
+  late,
+}: AttendanceSummaryProps) {
+  const summary = [
+    {
+      title: "Total Employees",
+      value: String(totalEmployees),
+      icon: <PeopleIcon />,
+    },
+    {
+      title: "Present",
+      value: String(present),
+      icon: <CheckCircleIcon />,
+    },
+    {
+      title: "Absent",
+      value: String(absent),
+      icon: <CancelIcon />,
+    },
+    {
+      title: "Late",
+      value: String(late),
+      icon: <AccessTimeIcon />,
+    },
+  ];
+
   return (
     <Grid container spacing={3} sx={{ mb: 3 }}>
       {summary.map((item) => (
