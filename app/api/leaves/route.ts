@@ -1,4 +1,6 @@
-export interface Leave {
+import { NextRequest, NextResponse } from "next/server";
+
+interface LeaveRecord {
   id: number;
   employeeName: string;
   department: string;
@@ -10,7 +12,7 @@ export interface Leave {
   status: "Pending" | "Approved" | "Rejected";
 }
 
-export const leaves: Leave[] = [
+let leaves: LeaveRecord[] = [
   {
     id: 1,
     employeeName: "John Doe",
@@ -45,3 +47,27 @@ export const leaves: Leave[] = [
     status: "Rejected",
   },
 ];
+
+export async function GET() {
+  return NextResponse.json(leaves);
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    const leave = await request.json();
+
+    const newLeave: LeaveRecord = {
+      id: leaves.length > 0 ? Math.max(...leaves.map((l) => l.id)) + 1 : 1,
+      ...leave,
+    };
+
+    leaves = [...leaves, newLeave];
+
+    return NextResponse.json(newLeave, { status: 201 });
+  } catch {
+    return NextResponse.json(
+      { message: "Unable to create leave record" },
+      { status: 500 }
+    );
+  }
+}

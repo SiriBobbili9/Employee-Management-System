@@ -2,34 +2,47 @@
 
 import Grid from "@mui/material/Grid";
 import DashboardCard from "../dashboard/DashboardCard";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
 
-export default function LeaveSummary() {
+interface LeaveSummaryProps {
+  pending: number;
+  approved: number;
+  rejected: number;
+}
+
+export default function LeaveSummary({
+  pending,
+  approved,
+  rejected,
+}: LeaveSummaryProps) {
   return (
     <Grid container spacing={3} sx={{ mb: 3 }}>
       <Grid size={{ xs: 12, md: 4 }}>
         <DashboardCard
           title="Pending Requests"
-          value="12"
+          value={String(pending)}
           subtitle="Awaiting approval"
-          icon={<>🟡</>}
+          icon={<AccessTimeIcon />}
         />
       </Grid>
 
       <Grid size={{ xs: 12, md: 4 }}>
         <DashboardCard
           title="Approved"
-          value="38"
+          value={String(approved)}
           subtitle="This month"
-          icon={<>🟢</>}
+          icon={<CheckCircleIcon />}
         />
       </Grid>
 
       <Grid size={{ xs: 12, md: 4 }}>
         <DashboardCard
           title="Rejected"
-          value="4"
+          value={String(rejected)}
           subtitle="This month"
-          icon={<>🔴</>}
+          icon={<CancelIcon />}
         />
       </Grid>
     </Grid>

@@ -3,7 +3,13 @@
 import { Box, Button, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
-export default function LeaveHeader() {
+interface LeaveHeaderProps {
+  onAdd?: () => void;
+}
+
+export default function LeaveHeader({
+  onAdd,
+}: LeaveHeaderProps) {
   return (
     <Box
       sx={{
@@ -26,6 +32,7 @@ export default function LeaveHeader() {
       <Button
         variant="contained"
         startIcon={<AddIcon />}
+        onClick={onAdd}
       >
         Apply Leave
       </Button>

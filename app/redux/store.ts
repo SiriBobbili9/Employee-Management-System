@@ -3,12 +3,14 @@ import authReducer from "./slices/authSlice";
 import employeeReducer from "./slices/employeeSlice";
 import departmentReducer from "./slices/departmentSlice";
 import attendanceReducer from "./slices/attendanceSlice";
+import leaveReducer from "./slices/leaveSlice";
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     employee: employeeReducer,
     department: departmentReducer,
     attendance: attendanceReducer,
+    leave: leaveReducer,
   },
 });
 
