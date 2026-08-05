@@ -3,7 +3,13 @@
 import { Box, Button, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
-export default function PayrollHeader() {
+interface PayrollHeaderProps {
+  onAdd?: () => void;
+}
+
+export default function PayrollHeader({
+  onAdd,
+}: PayrollHeaderProps) {
   return (
     <Box
       sx={{
@@ -26,6 +32,7 @@ export default function PayrollHeader() {
       <Button
         variant="contained"
         startIcon={<AddIcon />}
+        onClick={onAdd}
       >
         Generate Payroll
       </Button>

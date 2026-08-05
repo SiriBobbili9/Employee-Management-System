@@ -6,13 +6,23 @@ import PaymentsIcon from "@mui/icons-material/Payments";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 
-export default function PayrollSummary() {
+interface PayrollSummaryProps {
+  totalPayroll: number;
+  paidCount: number;
+  pendingCount: number;
+}
+
+export default function PayrollSummary({
+  totalPayroll,
+  paidCount,
+  pendingCount,
+}: PayrollSummaryProps) {
   return (
     <Grid container spacing={3} sx={{ mb: 3 }}>
       <Grid size={{ xs: 12, md: 4 }}>
         <DashboardCard
           title="Total Payroll"
-          value="₹2.35 Cr"
+          value={`INR ${totalPayroll.toLocaleString("en-IN")}`}
           subtitle="This month"
           icon={<AccountBalanceWalletIcon />}
         />
@@ -21,7 +31,7 @@ export default function PayrollSummary() {
       <Grid size={{ xs: 12, md: 4 }}>
         <DashboardCard
           title="Paid Salaries"
-          value="118"
+          value={String(paidCount)}
           subtitle="Employees"
           icon={<PaymentsIcon />}
         />
@@ -30,7 +40,7 @@ export default function PayrollSummary() {
       <Grid size={{ xs: 12, md: 4 }}>
         <DashboardCard
           title="Pending Salaries"
-          value="7"
+          value={String(pendingCount)}
           subtitle="Awaiting processing"
           icon={<PendingActionsIcon />}
         />
