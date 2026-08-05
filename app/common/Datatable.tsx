@@ -193,6 +193,7 @@ export default function DataTable({
         bgcolor: "background.paper",
         borderRadius: 2,
         overflow: "hidden",
+        marginTop: 5,
       }}
     >
       <DataGrid

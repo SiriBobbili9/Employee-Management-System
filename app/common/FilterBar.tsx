@@ -43,7 +43,7 @@ export default function FilterBar({
   onSortChange,
 }: FilterBarProps) {
   return (
-    <Grid container spacing={2} mb={3}>
+    <Grid container spacing={2} mb={5}>
       {fields.map((field) => (
         <Grid key={field.key} size={{ xs: 12, md: 4 }}>
           {field.type === "text" ? (

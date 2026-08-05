@@ -1,9 +1,12 @@
 "use client";
 
+import { useAppSelector } from "@/app/redux/hooks";
 import { Box, Typography } from "@mui/material";
 
 export default function DashboardHeader() {
-  const userName = "Siri";
+  const { user } = useAppSelector((state) => state.auth);
+  const userName = user?.email.split("@")[0] || "User";
+  console.log("User from Redux:", user);
 
   const today = new Date().toLocaleDateString("en-IN", {
     weekday: "long",

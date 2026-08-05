@@ -58,13 +58,15 @@ export default function DashboardCard({
 
           <Box
             sx={{
-              p: 2,
+              width: "40px",
+              height:"40px",
               bgcolor: "primary.main",
               borderRadius: "50%",
               color: "#fff",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              marginTop: "10px",
             }}
           >
             {icon}

@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
+import { useAppDispatch } from "@/app/redux/hooks";
+import { setLoginDetails } from "../redux/slices/authSlice";
 import {
   Box,
   Card,
@@ -25,6 +26,7 @@ import {
 
 export default function LoginPage() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -107,6 +109,7 @@ export default function LoginPage() {
     if (!validateForm()) {
       return;
     }
+    dispatch(setLoginDetails(formData));
 
     // Will connect Redux + API later
     router.push("/dashboard");

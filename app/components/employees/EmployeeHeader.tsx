@@ -95,7 +95,7 @@ export default function EmployeeHeader() {
   return (
     <Box
       sx={{
-        mb: 3,
+        mt: 3,
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",

@@ -290,7 +290,7 @@ export default function EmployeesPage() {
         onChange={handleFilterChange}
         onSortChange={setSortBy}
       />
-
+     
       <DataTable
         rows={sortedEmployees}
         columns={employeeColumns(handleEdit, handleDelete)}

@@ -27,7 +27,7 @@ export default function AttendanceChart() {
       <Typography
         variant="h6"
         fontWeight="bold"
-        mb={3}
+        style={{ marginBottom: "50px" }}
       >
         Attendance Overview
       </Typography>

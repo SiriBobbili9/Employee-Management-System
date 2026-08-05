@@ -15,9 +15,12 @@ import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
+import { useAppSelector } from "@/app/redux/hooks";
 
 export default function Navbar() {
   const isDarkMode = false;
+  const { user } = useAppSelector((state) => state.auth);
+  const userName = user?.email.split("@")[0] || "User";
 
   return (
     <AppBar
@@ -35,30 +38,10 @@ export default function Navbar() {
         {/* Left Section */}
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
           <Typography variant="h6" fontWeight="bold">
-            Dashboard
+            Employee Management System
           </Typography>
 
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              backgroundColor: "#F5F7FA",
-              px: 2,
-              py: 0.5,
-              borderRadius: 2,
-              width: 320,
-            }}
-          >
-            <SearchIcon color="action" />
-
-            <InputBase
-              placeholder="Search employees..."
-              sx={{
-                ml: 1,
-                flex: 1,
-              }}
-            />
-          </Box>
+          
         </Box>
 
         {/* Right Section */}
@@ -78,11 +61,11 @@ export default function Navbar() {
               bgcolor: "primary.main",
             }}
           >
-            S
+            {userName.charAt(0).toUpperCase()}
           </Avatar>
 
           <Typography fontWeight={600}>
-            Siri
+            {userName}
           </Typography>
         </Box>
       </Toolbar>

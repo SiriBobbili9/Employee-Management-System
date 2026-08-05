@@ -36,16 +36,17 @@ export default function RecentEmployees() {
         borderRadius: 3,
       }}
     >
-      <Box p={3}>
+      <Box p={6}>
         <Typography
           variant="h6"
           fontWeight="bold"
           mb={2}
+          style={{ padding: "20px" }}
         >
           Recent Employees
         </Typography>
 
-        <TableContainer>
+        <TableContainer style={{ padding: "0 20px" }}>
           <Table>
             <TableHead>
               <TableRow>
