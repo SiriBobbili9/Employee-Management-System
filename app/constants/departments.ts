@@ -3,8 +3,9 @@ export interface Department {
   departmentCode: string;
   departmentName: string;
   manager: string;
-  employees: number;
+  employeesCount: number;
   status: "Active" | "Inactive";
+  location: string;
 }
 
 export const departments: Department[] = [
@@ -13,39 +14,44 @@ export const departments: Department[] = [
     departmentCode: "DEP001",
     departmentName: "Engineering",
     manager: "John Doe",
-    employees: 85,
+    employeesCount: 85,
     status: "Active",
+    location: "Building A, Floor 3",
   },
   {
     id: 2,
     departmentCode: "DEP002",
     departmentName: "Human Resources",
     manager: "Alice Smith",
-    employees: 15,
+    employeesCount: 15,
     status: "Active",
+    location: "Building B, Floor 2",
   },
   {
     id: 3,
     departmentCode: "DEP003",
     departmentName: "Finance",
     manager: "Rahul Sharma",
-    employees: 20,
+    employeesCount: 20,
     status: "Active",
+    location: "Building C, Floor 1",
   },
   {
     id: 4,
     departmentCode: "DEP004",
     departmentName: "Sales",
     manager: "Sarah Khan",
-    employees: 45,
+    employeesCount: 45,
     status: "Active",
+    location: "Building D, Floor 4",
   },
   {
     id: 5,
     departmentCode: "DEP005",
     departmentName: "IT Support",
     manager: "David Wilson",
-    employees: 12,
+    employeesCount: 12,
     status: "Inactive",
+    location: "Building E, Floor 5",
   },
 ];

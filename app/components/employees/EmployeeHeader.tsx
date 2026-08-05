@@ -3,12 +3,73 @@
 import { Box, Button, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useAppDispatch } from "../../redux/hooks";
-import { addEmployee } from "../../redux/slices/employeeSlice";
+import { addEmployee, Employee } from "../../redux/slices/employeeSlice";
 import { createEmployee } from "../../redux/thunks/employeeThunk";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import AddEmployeeDialog from "./AddEmployeeDialog";
+import SimpleReactValidator from "simple-react-validator";
+import AddDialog from "@/app/common/AddDialog";
+import EmployeeForm from "./EmployeeForm";
+
+const initialFormData: Employee = {
+  id: 0,
+  employeeId: "",
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  department: "",
+  designation: "",
+  status: "Active",
+};
 
 export default function EmployeeHeader() {
+  const validator = useRef(
+    new SimpleReactValidator({
+      autoForceUpdate: {
+        forceUpdate: () => {
+          setRefresh((prev) => !prev);
+        },
+      },
+    }),
+  );
+
+  const [, setRefresh] = useState(false);
+  const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(false);
+
+  const [formData, setFormData] = useState<Employee>(initialFormData);
+
+  const handleChange = (field: keyof Employee, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+ const handleSubmit = async () => {
+  if (!validator.current.allValid()) {
+    validator.current.showMessages();
+    return;
+  }
+
+  try {
+    setLoading(true);
+
+    await dispatch(createEmployee(formData)).unwrap();
+
+    validator.current.hideMessages();
+
+    setFormData(initialFormData);
+
+    onClose();
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setLoading(false);
+  }
+};
+
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -57,7 +118,11 @@ export default function EmployeeHeader() {
       >
         Add Employee
       </Button>
-      <AddEmployeeDialog open={open} onClose={handleClose} />
+          <AddEmployeeDialog
+        open={open}
+        onClose={handleClose}
+      />        
+      {/* <AddEmployeeDialog open={open} onClose={handleClose} /> */}
     </Box>
   );
 }
