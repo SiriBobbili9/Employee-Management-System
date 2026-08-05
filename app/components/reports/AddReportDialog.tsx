@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import {
   Button,
@@ -12,6 +12,7 @@ import {
 import { LoadingButton } from "@mui/lab";
 
 import ReportForm from "./ReportForm";
+import SimpleReactValidator from "simple-react-validator";
 
 import { useAppDispatch } from "../../redux/hooks";
 import { createReport } from "../../redux/thunks/reportThunk";
@@ -35,6 +36,17 @@ export default function AddReportDialog({
   open,
   onClose,
 }: AddReportDialogProps) {
+  const validator = useRef(
+    new SimpleReactValidator({
+      autoForceUpdate: {
+        forceUpdate: () => {
+          setRefresh((prev) => !prev);
+        },
+      },
+    })
+  );
+
+  const [, setRefresh] = useState(false);
   const dispatch = useAppDispatch();
 
   const [loading, setLoading] = useState(false);
@@ -51,7 +63,8 @@ export default function AddReportDialog({
   };
 
   const handleSubmit = async () => {
-    if (!formData.reportName.trim() || !formData.generatedBy.trim()) {
+    if (!validator.current.allValid()) {
+      validator.current.showMessages();
       return;
     }
 
@@ -59,6 +72,8 @@ export default function AddReportDialog({
       setLoading(true);
 
       await dispatch(createReport(formData)).unwrap();
+
+      validator.current.hideMessages();
 
       setFormData(initialFormData);
       onClose();
@@ -74,7 +89,11 @@ export default function AddReportDialog({
       <DialogTitle>Create Report</DialogTitle>
 
       <DialogContent dividers>
-        <ReportForm formData={formData} onChange={handleChange} />
+        <ReportForm
+          formData={formData}
+          onChange={handleChange}
+          validator={validator}
+        />
       </DialogContent>
 
       <DialogActions>

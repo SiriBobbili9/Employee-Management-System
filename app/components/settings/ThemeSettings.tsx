@@ -6,8 +6,17 @@ import {
   FormControlLabel,
   Switch,
 } from "@mui/material";
+import { SettingsFormData } from "../../redux/slices/settingsSlice";
 
-export default function ThemeSettings() {
+interface ThemeSettingsProps {
+  formData: SettingsFormData;
+  onToggle: (field: keyof SettingsFormData, value: boolean) => void;
+}
+
+export default function ThemeSettings({
+  formData,
+  onToggle,
+}: ThemeSettingsProps) {
   return (
     <Paper sx={{ p: 3, borderRadius: 3 }}>
       <Typography variant="h6" fontWeight="bold" mb={3}>
@@ -15,7 +24,14 @@ export default function ThemeSettings() {
       </Typography>
 
       <FormControlLabel
-        control={<Switch />}
+        control={
+          <Switch
+            checked={formData.darkMode}
+            onChange={(e) =>
+              onToggle("darkMode", e.target.checked)
+            }
+          />
+        }
         label="Enable Dark Mode"
       />
     </Paper>

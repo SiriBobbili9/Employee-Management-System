@@ -1,6 +1,7 @@
 "use client";
 
 import { Grid, MenuItem, TextField } from "@mui/material";
+import SimpleReactValidator from "simple-react-validator";
 
 import { departments } from "../../constants/departmentsValues";
 import { PayrollRecord } from "../../redux/slices/payrollSlice";
@@ -31,11 +32,16 @@ interface PayrollFormProps {
     field: keyof PayrollFormData,
     value: string | number
   ) => void;
+  validator?: React.MutableRefObject<SimpleReactValidator>;
 }
 
 const statuses: PayrollRecord["status"][] = ["Paid", "Pending"];
 
-export default function PayrollForm({ formData, onChange }: PayrollFormProps) {
+export default function PayrollForm({
+  formData,
+  onChange,
+  validator,
+}: PayrollFormProps) {
   return (
     <Grid container spacing={2} sx={{ mt: 1 }}>
       <Grid size={{ xs: 12, md: 6 }}>
@@ -44,6 +50,16 @@ export default function PayrollForm({ formData, onChange }: PayrollFormProps) {
           label="Employee ID"
           value={formData.employeeId}
           onChange={(e) => onChange("employeeId", e.target.value)}
+          error={!!validator?.current.message(
+            "Employee ID",
+            formData.employeeId,
+            "required"
+          )}
+          helperText={validator?.current.message(
+            "Employee ID",
+            formData.employeeId,
+            "required"
+          )}
         />
       </Grid>
 
@@ -53,6 +69,16 @@ export default function PayrollForm({ formData, onChange }: PayrollFormProps) {
           label="Employee Name"
           value={formData.employeeName}
           onChange={(e) => onChange("employeeName", e.target.value)}
+          error={!!validator?.current.message(
+            "Employee Name",
+            formData.employeeName,
+            "required"
+          )}
+          helperText={validator?.current.message(
+            "Employee Name",
+            formData.employeeName,
+            "required"
+          )}
         />
       </Grid>
 
@@ -63,6 +89,16 @@ export default function PayrollForm({ formData, onChange }: PayrollFormProps) {
           label="Department"
           value={formData.department}
           onChange={(e) => onChange("department", e.target.value)}
+          error={!!validator?.current.message(
+            "Department",
+            formData.department,
+            "required"
+          )}
+          helperText={validator?.current.message(
+            "Department",
+            formData.department,
+            "required"
+          )}
         >
           {departments.map((department) => (
             <MenuItem key={department} value={department}>
@@ -79,6 +115,16 @@ export default function PayrollForm({ formData, onChange }: PayrollFormProps) {
           placeholder="August 2026"
           value={formData.paymentMonth}
           onChange={(e) => onChange("paymentMonth", e.target.value)}
+          error={!!validator?.current.message(
+            "Payment Month",
+            formData.paymentMonth,
+            "required"
+          )}
+          helperText={validator?.current.message(
+            "Payment Month",
+            formData.paymentMonth,
+            "required"
+          )}
         />
       </Grid>
 
@@ -89,6 +135,16 @@ export default function PayrollForm({ formData, onChange }: PayrollFormProps) {
           label="Basic Salary"
           value={formData.basicSalary}
           onChange={(e) => onChange("basicSalary", e.target.value)}
+          error={!!validator?.current.message(
+            "Basic Salary",
+            formData.basicSalary,
+            "required|numeric|min:0"
+          )}
+          helperText={validator?.current.message(
+            "Basic Salary",
+            formData.basicSalary,
+            "required|numeric|min:0"
+          )}
         />
       </Grid>
 
@@ -99,6 +155,16 @@ export default function PayrollForm({ formData, onChange }: PayrollFormProps) {
           label="HRA"
           value={formData.hra}
           onChange={(e) => onChange("hra", e.target.value)}
+          error={!!validator?.current.message(
+            "HRA",
+            formData.hra,
+            "required|numeric|min:0"
+          )}
+          helperText={validator?.current.message(
+            "HRA",
+            formData.hra,
+            "required|numeric|min:0"
+          )}
         />
       </Grid>
 
@@ -109,6 +175,16 @@ export default function PayrollForm({ formData, onChange }: PayrollFormProps) {
           label="Allowances"
           value={formData.allowances}
           onChange={(e) => onChange("allowances", e.target.value)}
+          error={!!validator?.current.message(
+            "Allowances",
+            formData.allowances,
+            "required|numeric|min:0"
+          )}
+          helperText={validator?.current.message(
+            "Allowances",
+            formData.allowances,
+            "required|numeric|min:0"
+          )}
         />
       </Grid>
 
@@ -119,6 +195,16 @@ export default function PayrollForm({ formData, onChange }: PayrollFormProps) {
           label="Deductions"
           value={formData.deductions}
           onChange={(e) => onChange("deductions", e.target.value)}
+          error={!!validator?.current.message(
+            "Deductions",
+            formData.deductions,
+            "required|numeric|min:0"
+          )}
+          helperText={validator?.current.message(
+            "Deductions",
+            formData.deductions,
+            "required|numeric|min:0"
+          )}
         />
       </Grid>
 
@@ -129,6 +215,16 @@ export default function PayrollForm({ formData, onChange }: PayrollFormProps) {
           label="Bonus"
           value={formData.bonus}
           onChange={(e) => onChange("bonus", e.target.value)}
+          error={!!validator?.current.message(
+            "Bonus",
+            formData.bonus,
+            "required|numeric|min:0"
+          )}
+          helperText={validator?.current.message(
+            "Bonus",
+            formData.bonus,
+            "required|numeric|min:0"
+          )}
         />
       </Grid>
 
@@ -139,6 +235,16 @@ export default function PayrollForm({ formData, onChange }: PayrollFormProps) {
           label="Net Salary"
           value={formData.netSalary}
           onChange={(e) => onChange("netSalary", e.target.value)}
+          error={!!validator?.current.message(
+            "Net Salary",
+            formData.netSalary,
+            "required|numeric|min:0"
+          )}
+          helperText={validator?.current.message(
+            "Net Salary",
+            formData.netSalary,
+            "required|numeric|min:0"
+          )}
         />
       </Grid>
 

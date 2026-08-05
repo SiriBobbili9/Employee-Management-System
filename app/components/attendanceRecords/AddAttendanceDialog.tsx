@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import {
   Button,
@@ -17,6 +17,7 @@ import {
   AttendanceRecord,
 } from "../../redux/slices/attendanceSlice";
 import AttendanceForm from "./AttendanceForm";
+import SimpleReactValidator from "simple-react-validator";
 
 interface AddAttendanceDialogProps {
   open: boolean;
@@ -37,6 +38,17 @@ export default function AddAttendanceDialog({
   open,
   onClose,
 }: AddAttendanceDialogProps) {
+  const validator = useRef(
+    new SimpleReactValidator({
+      autoForceUpdate: {
+        forceUpdate: () => {
+          setRefresh((prev) => !prev);
+        },
+      },
+    })
+  );
+
+  const [, setRefresh] = useState(false);
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] =
@@ -53,7 +65,8 @@ export default function AddAttendanceDialog({
   };
 
   const handleSubmit = async () => {
-    if (!formData.employeeName.trim() || !formData.department.trim()) {
+    if (!validator.current.allValid()) {
+      validator.current.showMessages();
       return;
     }
 
@@ -61,6 +74,8 @@ export default function AddAttendanceDialog({
       setLoading(true);
 
       await dispatch(createAttendance(formData)).unwrap();
+
+      validator.current.hideMessages();
 
       setFormData(initialFormData);
       onClose();
@@ -76,7 +91,11 @@ export default function AddAttendanceDialog({
       <DialogTitle>Add Attendance</DialogTitle>
 
       <DialogContent dividers>
-        <AttendanceForm formData={formData} onChange={handleChange} />
+        <AttendanceForm
+          formData={formData}
+          onChange={handleChange}
+          validator={validator}
+        />
       </DialogContent>
 
       <DialogActions>

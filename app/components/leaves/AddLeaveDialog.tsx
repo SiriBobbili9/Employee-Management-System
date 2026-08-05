@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import {
   Button,
@@ -16,6 +16,7 @@ import LeaveForm from "./LeaveForm";
 import { useAppDispatch } from "../../redux/hooks";
 import { createLeave } from "../../redux/thunks/leaveThunk";
 import { LeaveRecord } from "../../redux/slices/leaveSlice";
+import SimpleReactValidator from "simple-react-validator";
 
 interface AddLeaveDialogProps {
   open: boolean;
@@ -38,6 +39,17 @@ export default function AddLeaveDialog({
   open,
   onClose,
 }: AddLeaveDialogProps) {
+  const validator = useRef(
+    new SimpleReactValidator({
+      autoForceUpdate: {
+        forceUpdate: () => {
+          setRefresh((prev) => !prev);
+        },
+      },
+    })
+  );
+
+  const [, setRefresh] = useState(false);
   const dispatch = useAppDispatch();
 
   const [loading, setLoading] = useState(false);
@@ -54,7 +66,8 @@ export default function AddLeaveDialog({
   };
 
   const handleSubmit = async () => {
-    if (!formData.employeeName.trim() || !formData.department.trim()) {
+    if (!validator.current.allValid()) {
+      validator.current.showMessages();
       return;
     }
 
@@ -62,6 +75,8 @@ export default function AddLeaveDialog({
       setLoading(true);
 
       await dispatch(createLeave(formData)).unwrap();
+
+      validator.current.hideMessages();
 
       setFormData(initialFormData);
       onClose();
@@ -77,7 +92,11 @@ export default function AddLeaveDialog({
       <DialogTitle>Apply Leave</DialogTitle>
 
       <DialogContent dividers>
-        <LeaveForm formData={formData} onChange={handleChange} />
+        <LeaveForm
+          formData={formData}
+          onChange={handleChange}
+          validator={validator}
+        />
       </DialogContent>
 
       <DialogActions>

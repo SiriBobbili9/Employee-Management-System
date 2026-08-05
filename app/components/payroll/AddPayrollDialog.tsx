@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import {
   Button,
@@ -12,6 +12,7 @@ import {
 import { LoadingButton } from "@mui/lab";
 
 import PayrollForm, { PayrollFormData } from "./PayrollForm";
+import SimpleReactValidator from "simple-react-validator";
 
 import { useAppDispatch } from "../../redux/hooks";
 import { createPayroll } from "../../redux/thunks/payrollThunk";
@@ -41,6 +42,17 @@ export default function AddPayrollDialog({
   open,
   onClose,
 }: AddPayrollDialogProps) {
+  const validator = useRef(
+    new SimpleReactValidator({
+      autoForceUpdate: {
+        forceUpdate: () => {
+          setRefresh((prev) => !prev);
+        },
+      },
+    })
+  );
+
+  const [, setRefresh] = useState(false);
   const dispatch = useAppDispatch();
 
   const [loading, setLoading] = useState(false);
@@ -65,7 +77,8 @@ export default function AddPayrollDialog({
   };
 
   const handleSubmit = async () => {
-    if (!formData.employeeName.trim() || !formData.employeeId.trim()) {
+    if (!validator.current.allValid()) {
+      validator.current.showMessages();
       return;
     }
 
@@ -84,6 +97,8 @@ export default function AddPayrollDialog({
 
       await dispatch(createPayroll(payload)).unwrap();
 
+      validator.current.hideMessages();
+
       setFormData(initialFormData);
       onClose();
     } catch (error) {
@@ -98,7 +113,11 @@ export default function AddPayrollDialog({
       <DialogTitle>Generate Payroll</DialogTitle>
 
       <DialogContent dividers>
-        <PayrollForm formData={formData} onChange={handleChange} />
+        <PayrollForm
+          formData={formData}
+          onChange={handleChange}
+          validator={validator}
+        />
       </DialogContent>
 
       <DialogActions>

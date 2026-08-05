@@ -2,6 +2,7 @@
 
 import { MenuItem, TextField } from "@mui/material";
 import { Grid } from "@mui/material";
+import SimpleReactValidator from "simple-react-validator";
 
 import { departments } from "../../constants/departmentsValues";
 import { AttendanceRecord } from "../../redux/slices/attendanceSlice";
@@ -12,6 +13,7 @@ interface AttendanceFormProps {
     field: keyof AttendanceRecord,
     value: string | number
   ) => void;
+  validator?: React.MutableRefObject<SimpleReactValidator>;
 }
 
 const statusOptions: AttendanceRecord["status"][] = [
@@ -24,6 +26,7 @@ const statusOptions: AttendanceRecord["status"][] = [
 export default function AttendanceForm({
   formData,
   onChange,
+  validator,
 }: AttendanceFormProps) {
   return (
     <Grid container spacing={2} mt={1}>
@@ -35,6 +38,16 @@ export default function AttendanceForm({
           onChange={(e) =>
             onChange("employeeName", e.target.value)
           }
+          error={!!validator?.current.message(
+            "Employee Name",
+            formData.employeeName,
+            "required"
+          )}
+          helperText={validator?.current.message(
+            "Employee Name",
+            formData.employeeName,
+            "required"
+          )}
         />
       </Grid>
 
@@ -47,6 +60,16 @@ export default function AttendanceForm({
           onChange={(e) =>
             onChange("department", e.target.value)
           }
+          error={!!validator?.current.message(
+            "Department",
+            formData.department,
+            "required"
+          )}
+          helperText={validator?.current.message(
+            "Department",
+            formData.department,
+            "required"
+          )}
         >
           {departments.map((department) => (
             <MenuItem key={department} value={department}>
@@ -63,6 +86,16 @@ export default function AttendanceForm({
           placeholder="09:00 AM"
           value={formData.checkIn}
           onChange={(e) => onChange("checkIn", e.target.value)}
+          error={!!validator?.current.message(
+            "Check In",
+            formData.checkIn,
+            "required"
+          )}
+          helperText={validator?.current.message(
+            "Check In",
+            formData.checkIn,
+            "required"
+          )}
         />
       </Grid>
 
@@ -73,6 +106,16 @@ export default function AttendanceForm({
           placeholder="06:00 PM"
           value={formData.checkOut}
           onChange={(e) => onChange("checkOut", e.target.value)}
+          error={!!validator?.current.message(
+            "Check Out",
+            formData.checkOut,
+            "required"
+          )}
+          helperText={validator?.current.message(
+            "Check Out",
+            formData.checkOut,
+            "required"
+          )}
         />
       </Grid>
 
@@ -85,6 +128,16 @@ export default function AttendanceForm({
           onChange={(e) =>
             onChange("workingHours", e.target.value)
           }
+          error={!!validator?.current.message(
+            "Working Hours",
+            formData.workingHours,
+            "required"
+          )}
+          helperText={validator?.current.message(
+            "Working Hours",
+            formData.workingHours,
+            "required"
+          )}
         />
       </Grid>
 
